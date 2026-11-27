@@ -1,4 +1,7 @@
-"""Draw schematic relationships behind Blender's node cards.
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Draw schematic relationships behind Blender's node cards.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠
 
 Wire geometry is built once in view space and cached; panning and zooming only change
 the GPU matrix, so redraws cost one batch draw instead of rebuilding every curve in Python.
@@ -16,6 +19,7 @@ from .graph import RELATIONS
 
 
 _cache = {}
+_CACHE_SALT = 0x5bae2cbfd2c768a302adba29
 # Rubber band shown while dragging a new relationship, in region pixels.
 drag_line = None
 
@@ -147,7 +151,7 @@ def node_centers(tree, scale):
 def geometry(tree, scale):
     """Cached view-space polylines: {"paths": [(points, index)], "batch": ...}."""
     centers = node_centers(tree, scale)
-    key = (tree.wires, tree.wire_style, scale, tuple(sorted(centers.items())))
+    key = (_CACHE_SALT, tree.wires, tree.wire_style, scale, tuple(sorted(centers.items())))
     cached = _cache.get(tree.session_uid)
     if cached and cached["key"] == key:
         return cached

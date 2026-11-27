@@ -1,20 +1,70 @@
-# Blender Schematic View 0.0.10
+# Blender Schematic View 0.7.0
 
-[繁體中文使用說明](使用說明-繁體中文.md) · [English User Guide](User-Guide.en.md)
+[繁體中文使用說明](使用說明-繁體中文.md) · [English User Guide](User-Guide.en.md) · [Changelog](CHANGELOG.md)
 
-[下載 0.0.10 安裝檔 · Download](schematic_view-0.0.10.zip?raw=true)
+[Download 0.7.0 · 下載](releases/schematic_view-0.7.0.zip?raw=true)
 
-**AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
+## Demo video / 示範影片
+
+Watch a short walkthrough of Schematic View.
+
+觀看 Schematic View 的簡短操作示範。
+
+[![Schematic View demo](docs/demo_thumb.jpg)](https://www.youtube.com/watch?v=gUM2HK-_Bac)
 
 **AI disclosure**　This extension was created by AI and iterated based on user feedback.
 
-在 Blender 內檢視物件和骨架的關係。每個場景保存自己的圖、篩選條件與節點位置。
+**AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
 
-## 安裝
+Schematic View brings a 3ds Max-style Schematic View to Blender. It shows your whole scene as a node graph and lets you wire up parents, constraints and drivers visually.
 
-1. 在 Blender 5.3 開啟 **Edit → Preferences → Get Extensions**。
-2. 從右上角選單選 **Install from Disk**，選擇 `schematic_view-0.0.10.zip`。
-3. 在 3D Viewport 選取物件或骨架，再按 **N → Schematic → Open Schematic View**。浮動視窗會顯示所選項目及直接關係，並建立或切換到其標籤頁。沒有選取時，會開啟空白的 **No Selection** 頁。
+- **Whole-scene relationship graph:** every object, with color-coded wires for parent, constraint, driver and modifier/material references. Filter by Hierarchy or References, and the graph refreshes automatically when you add objects.
+- **Every bone is its own node:** wire empties or meshes to individual bones (Driver, Copy Location, Damped Track, IK), or link bones to each other (Parent, constraint, driver).
+- **Link Workbench:** pick one source and one or more targets, tick their properties, and create a Parent, one of 12 constraint types, or a Driver, with no code. "Links Between These" lists every wire between the loaded items, with Unlink.
+- **Relative / Absolute offset:** in Relative mode, targets stay where they are and follow only the change; in Absolute mode they take the source value directly.
+- **Auto Units:** angles are written in degrees, angle↔distance is converted automatically, integer targets are rounded and checkbox targets switch at > 0.5.
+- **Map Range + Clamp**, plus **its own expression for each target value**: one source can move, spin and scale an object with different formulas.
+- **Chain and Copy Once:** source → target 1 → target 2…, or write a value one time with no live driver.
+- **Property browser:** custom properties, modifiers, shape keys and materials, for example driving a material's emission.
+- **Notes (Ctrl+J):** colored frames with text, saved in the .blend, with jump-to-note.
+- **Skeleton Shape layout:** bones are laid out like the rest pose (human, quadruped…), with left side blue and right side red.
+- **3ds Max-style keys:** [ parent, ] children, double-click selects the tree, L selects dependents, X deletes a selected wire.
+
+### 中文
+
+Schematic View 把 3ds Max 風格的 Schematic View 帶進 Blender，用節點圖呈現整個場景，Parent、Constraint、Driver 都能用視覺化的方式連起來。
+
+- **整個場景的關係圖：** 所有物件都在圖上，Parent、Constraint、Driver、Modifier／材質參照各用不同顏色的線。可以切換 Hierarchy 或 References 篩選，新增物件時圖會自動更新。
+- **每根骨頭都是獨立節點：** 可以讓空物件或網格物件連到個別骨頭（Driver、Copy Location、Damped Track、IK），骨頭和骨頭之間也能互相連動（Parent、Constraint、Driver）。
+- **Link Workbench：** 選一個來源、一個或多個目標，勾選屬性，就能建立 Parent、12 種 Constraint 或 Driver，不用寫程式。「Links Between These」會列出載入項目之間的所有連線，可以直接 Unlink。
+- **Relative／Absolute 偏移：** Relative 讓目標留在原位、只跟著變化量走；Absolute 直接套用來源的值。
+- **Auto Units：** 角度用「度」來寫，角度和距離會自動換算，整數目標會四捨五入，開關目標超過 0.5 就打開。
+- **Map Range＋Clamp**，**每個目標值也能有自己的運算式**：一個來源就能用不同公式同時讓物件移動、旋轉和縮放。
+- **Chain 和 Copy Once：** 來源 → 目標 1 → 目標 2… 依序串連，或者只寫入一次數值，不留下 Driver。
+- **屬性瀏覽：** 自訂屬性、Modifier、Shape Keys、材質都能連，例如驅動材質的 Emission。
+- **Note 註解（Ctrl+J）：** 加上帶文字的彩色框，存在 .blend 裡，可以從清單直接跳過去。
+- **Skeleton Shape 排版：** 骨頭依照 rest pose 的樣子排列（人形、四足……），左邊藍色、右邊紅色。
+- **3ds Max 風格快捷鍵：** [ 選父物件，] 選子物件，雙擊選整棵樹，L 選相依物件，X 刪除選取的連線。
+
+Earlier versions are listed in [CHANGELOG.md](CHANGELOG.md).
+
+## Install
+
+Requires **Blender 5.3 or later**.
+
+1. In Blender, open **Edit → Preferences → Get Extensions**.
+2. Open the menu at the top right and choose **Install from Disk**.
+3. Select [`releases/schematic_view-0.7.0.zip`](releases/schematic_view-0.7.0.zip?raw=true).
+4. In the 3D Viewport, select an object or armature, then press **N → Schematic → Open Schematic View**. The floating window shows the selection and its direct relationships, and creates or switches to that tab. With nothing selected, it opens an empty **No Selection** page.
+
+### 安裝
+
+需要 **Blender 5.3 以上**。
+
+1. 在 Blender 開啟 **Edit → Preferences → Get Extensions**。
+2. 從右上角選單選 **Install from Disk**。
+3. 選擇 [`releases/schematic_view-0.7.0.zip`](releases/schematic_view-0.7.0.zip?raw=true)。
+4. 在 3D Viewport 選取物件或骨架，再按 **N → Schematic → Open Schematic View**。浮動視窗會顯示所選項目及直接關係，並建立或切換到其標籤頁。沒有選取時，會開啟空白的 **No Selection** 頁。
 
 ## 標籤頁
 
@@ -62,4 +112,4 @@
 
 例如要用控制骨的 `["ik_fk"]` 驅動物件的 Z 縮放，先標記控制骨，再選物件，將 **Source Property** 填成 `["ik_fk"]`、**Driven Property** 填成 `scale`、**Driven Array Index** 填成 `2`。
 
-從 `0.0.00` 升級後，重新開啟 Schematic View 或按 **Refresh / Apply Filters**，現有圖會套用人形排列和收合節點。安裝套件的 Blender 版本欄位使用 `0.0.10`。Auto-Rig Pro 骨頭分類參考其[骨架文件](https://www.lucky3d.fr/auto-rig-pro/doc/rig_behaviour_doc.html)。
+從 `0.0.00` 升級後，重新開啟 Schematic View 或按 **Refresh / Apply Filters**，現有圖會套用人形排列和收合節點。安裝套件版本為 `0.7.0`，最低 Blender 版本為 5.3。Auto-Rig Pro 骨頭分類參考其[骨架文件](https://www.lucky3d.fr/auto-rig-pro/doc/rig_behaviour_doc.html)。

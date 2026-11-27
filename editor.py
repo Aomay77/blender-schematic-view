@@ -1,4 +1,7 @@
-"""Native Blender node editor for the projected scene relationships."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Native Blender node editor for the projected scene relationships.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 from collections import defaultdict
 import json
@@ -17,7 +20,9 @@ from .layout import COLUMN, ROW, arrange, name_side
 
 TREE_ID = "SCHEMATIC_NT_scene"
 NODE_ID = "SCHEMATIC_ND_entity"
-VERSION = "0.3.0"
+VERSION = "0.7.0"
+AUTHOR = "Aomay Huang"
+BUILD_MARK = "5bae2cbfd2c768a302adba29"
 
 
 def editor_tree(context):
@@ -296,6 +301,8 @@ def refresh(tree, reset_layout=False, view_layer=None, sync_viewport=False, coll
     hidden = {key: value for key, value in hidden.items() if key in existing}
     tree.links.clear()
     for node in list(tree.nodes):
+        if node.bl_idname == "NodeFrame":
+            continue  # Notes stay where the user put them.
         entity = node_entity(node)
         if not entity or entity.key not in kinds or previous[entity.key] != node:
             tree.nodes.remove(node)
@@ -420,6 +427,8 @@ def tab_for_scope(scene, anchors, entire_scene=False):
     tree = bpy.data.node_groups.new("Schematic", TREE_ID)
     tree.scene = scene
     tree.use_fake_user = True
+    if BUILD_MARK:
+        tree["_sv_build"] = BUILD_MARK
     tree.scope_mode = "SCENE" if entire_scene else "SELECTION"
     for obj in anchors:
         tree.scope_objects.add().object_ref = obj
@@ -625,6 +634,8 @@ class SCHEMATIC_PT_launch(Panel):
 
     def draw(self, context):
         self.layout.operator("schematic.open", icon="NODETREE")
+        self.layout.operator("schematic.open_link", text="Link Workbench", icon="LINKED")
+        self.layout.label(text=f"© {AUTHOR}")
 
 
 class SCHEMATIC_PT_controls(Panel):
@@ -670,6 +681,7 @@ class SCHEMATIC_PT_controls(Panel):
         row.operator("schematic.expand_selected", text="Expand", icon="TRIA_DOWN")
         row.operator("schematic.expand_selected", text="Collapse", icon="TRIA_RIGHT").collapse = True
         layout.menu("SCHEMATIC_MT_select", icon="RESTRICT_SELECT_OFF")
+        layout.operator("schematic.open_link", text="Link Selected in Workbench", icon="LINKED")
         source = marked_entity(tree)
         layout.label(text=f"Source · {source.name}" if source else "Source · —", icon="PINNED")
         active = active_entity(tree)
@@ -701,6 +713,7 @@ class SCHEMATIC_PT_options(SchematicOperator, Panel):
         layout.prop(tree, "sync_selection")
         layout.prop(tree, "hide_in_viewport")
         layout.prop(tree, "show_note")
+        layout.label(text=f"Schematic View {VERSION} · © {AUTHOR}", icon="INFO")
 
 
 def draw_filter_categories(layout, tree, group):

@@ -1,4 +1,7 @@
-"""Apply native Blender edits from the node editor context menu."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Apply native Blender edits from the node editor context menu.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 from collections import defaultdict
 from contextlib import contextmanager
@@ -637,6 +640,7 @@ def context_menu(self, context):
     layout.operator("schematic.expand_selected", text="Expand Selected", icon="TRIA_DOWN")
     layout.operator("schematic.expand_selected", text="Collapse Selected", icon="TRIA_RIGHT").collapse = True
     layout.menu("SCHEMATIC_MT_select", icon="RESTRICT_SELECT_OFF")
+    layout.operator("schematic.note_add", text="Add Note…", icon="TEXT")
     if len(selected) == 1:
         layout.operator("schematic.rename", text="Rename…", icon="SORTALPHA")
     if (context.mode == "OBJECT" and all(not entity.bone for entity in selected)
@@ -701,17 +705,20 @@ def remove_constraint_link(owner, name, source):
     owner.constraints.remove(constraint)
 
 
-def driver_block(target, role):
+def driver_block(target, role, block_name=""):
     if role == "OBJECT":
         return target.obj
     if role == "SHAPE":
         return getattr(target.obj.data, "shape_keys", None)
+    if role in {"MATERIAL", "NODETREE"}:
+        material = bpy.data.materials.get(block_name)
+        return material.node_tree if material and role == "NODETREE" else material
     return target.obj.data
 
 
 def remove_driver_link(target, ref):
-    _, role, path, index, variable_name = ref
-    block = driver_block(target, role)
+    _, role, path, index, variable_name, *rest = ref
+    block = driver_block(target, role, rest[0] if rest else "")
     animation = getattr(block, "animation_data", None)
     curve = animation.drivers.find(path, index=index) if animation else None
     if curve is None:
@@ -726,7 +733,11 @@ def remove_driver_link(target, ref):
 def delete_relationship(context, tree, record):
     """Unlink one wire, the way 3ds Max's Unlink Selected works in Schematic View."""
     source, target = nodes_of(tree, record)
-    kind, refs = record[2], record[4]
+    return unlink(context, source, target, record[2], record[4])
+
+
+def unlink(context, source, target, kind, refs):
+    """Remove one relationship between two entities in the scene."""
     if not source or not target:
         raise ValueError("The wire's nodes no longer exist. Refresh the graph.")
     if not target.obj.is_editable:
@@ -1073,6 +1084,7 @@ KEYMAP_ITEMS = (
     ("schematic.select_related", "RIGHT_BRACKET", "PRESS", {}, {"mode": "CHILDREN"}),
     ("schematic.select_related", "LEFT_BRACKET", "PRESS", {}, {"mode": "PARENT"}),
     ("schematic.rename", "F2", "PRESS", {}, {}),
+    ("schematic.note_add", "J", "PRESS", {"ctrl": True}, {}),
 )
 keymaps = []
 

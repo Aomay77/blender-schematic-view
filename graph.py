@@ -1,4 +1,7 @@
-"""Read Blender relationships independently of the editor and its filters."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Read Blender relationships independently of the editor and its filters.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -118,6 +121,10 @@ def block_role(block):
         return "OBJECT"
     if isinstance(block, bpy.types.Key):
         return "SHAPE"
+    if isinstance(block, bpy.types.Material):
+        return "MATERIAL"
+    if isinstance(block, bpy.types.NodeTree):
+        return "NODETREE"
     return "DATA"
 
 
@@ -167,6 +174,8 @@ def collect(scene):
     edges = []
     objects = list(scene.objects)
     aliases = defaultdict(list)
+    material_users = defaultdict(list)
+    material_of = {}
     for obj in objects:
         entities[obj, ""] = Entity(obj)
         if obj.pose:
@@ -177,6 +186,13 @@ def collect(scene):
             shape_keys = getattr(obj.data, "shape_keys", None)
             if shape_keys:
                 aliases[shape_keys].append(obj)
+        for slot in obj.material_slots:
+            material = slot.material
+            if material and obj not in material_users[material]:
+                material_users[material].append(obj)
+                if material.node_tree:
+                    material_users[material.node_tree].append(obj)
+                    material_of[material.node_tree] = material
 
     def add(obj, bone, target, kind, detail="", ref=()):
         source = entities.get((obj, bone))
@@ -245,12 +261,15 @@ def collect(scene):
         for other in users[1:]:
             add(other, "", first, "SHARED", data.name, ("SHARED",))
 
-    for block in (*objects, *aliases):
+    # Materials (and their node trees) drive and are driven on behalf of the objects using them.
+    users = {**aliases, **material_users}
+    for block in (*objects, *users):
         animation = getattr(block, "animation_data", None)
         if not animation:
             continue
-        owners = [block] if isinstance(block, bpy.types.Object) else aliases[block]
+        owners = [block] if isinstance(block, bpy.types.Object) else users[block]
         role = block_role(block)
+        block_name = material_of[block].name if block in material_of else getattr(block, "name", "")
         for curve in animation.drivers:
             if not curve.driver:
                 continue
@@ -266,11 +285,12 @@ def collect(scene):
                         source_bone = (getattr(slot, "bone_target", "")
                                        or bone_from_path(source_id, getattr(slot, "data_path", "")))
                         sources = ([source_id] if isinstance(source_id, bpy.types.Object)
-                                   else aliases.get(source_id, ()))
+                                   else users.get(source_id, ()))
                         for source_obj in sources:
                             add(source_obj, source_bone, target, "DRIVER",
                                 f"{curve.data_path}[{curve.array_index}] ← {variable.name}",
-                                ("DRIVER", role, curve.data_path, curve.array_index, variable.name))
+                                ("DRIVER", role, curve.data_path, curve.array_index, variable.name,
+                                 block_name))
     return entities, list(dict.fromkeys(edges))
 
 

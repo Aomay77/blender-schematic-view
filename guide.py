@@ -1,4 +1,7 @@
-"""Color swatches and the on-canvas controls note."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Color swatches and the on-canvas controls note.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 import blf
 import bpy
@@ -42,7 +45,8 @@ NOTE = (
     ("[ ]   Parent / children   ·   L   Dependents", 12, (0.78, 0.82, 0.88, 1.0)),
     ("Alt+Drag   Child → parent: link", 12, (0.78, 0.82, 0.88, 1.0)),
     ("Alt+Click wire   ·   X   Unlink", 12, (0.78, 0.82, 0.88, 1.0)),
-    ("F2   Rename   ·   Right-click   More", 12, (0.78, 0.82, 0.88, 1.0)),
+    ("F2   Rename   ·   Ctrl+J   Add note", 12, (0.78, 0.82, 0.88, 1.0)),
+    ("Right-click   More", 12, (0.78, 0.82, 0.88, 1.0)),
 )
 
 
