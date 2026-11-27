@@ -16,21 +16,37 @@ Watch a short walkthrough of Schematic View.
 
 **AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
 
-Schematic View shows object and armature relationships inside Blender. Each scene keeps its own graph, filters, and node positions. Requires **Blender 5.3 or later**.
+Schematic View brings a 3ds Max-style Schematic View to Blender. It shows your whole scene as a node graph and lets you wire up parents, constraints and drivers visually.
 
-在 Blender 內檢視物件和骨架的關係。每個場景保存自己的圖、篩選條件與節點位置。需要 **Blender 5.3 以上**。
-
-## 0.7.0
-
-Relative offset is the default for Parent, Constraint, and Driver: the target stays put and follows only the change in the source. Absolute writes the value directly. Copy Once is always absolute. Auto Units (on by default) treats angles as degrees, integers with `round()`, and booleans with `> 0.5`. Map Range maps From Min/Max onto To Min/Max, with an optional Clamp, and feeds the result to Expression as `var`. Each checked target can keep its own expression; a blank one uses the shared Expression. The red alert background from 0.6.1 is gone, and Source stays on the first row.
-
-See [CHANGELOG.md](CHANGELOG.md) for the full notes.
+- **Whole-scene relationship graph:** every object, with color-coded wires for parent, constraint, driver and modifier/material references. Filter by Hierarchy or References, and the graph refreshes automatically when you add objects.
+- **Every bone is its own node:** wire empties or meshes to individual bones (Driver, Copy Location, Damped Track, IK), or link bones to each other (Parent, constraint, driver).
+- **Link Workbench:** pick one source and one or more targets, tick their properties, and create a Parent, one of 12 constraint types, or a Driver, with no code. "Links Between These" lists every wire between the loaded items, with Unlink.
+- **Relative / Absolute offset:** in Relative mode, targets stay where they are and follow only the change; in Absolute mode they take the source value directly.
+- **Auto Units:** angles are written in degrees, angle↔distance is converted automatically, integer targets are rounded and checkbox targets switch at > 0.5.
+- **Map Range + Clamp**, plus **its own expression for each target value**: one source can move, spin and scale an object with different formulas.
+- **Chain and Copy Once:** source → target 1 → target 2…, or write a value one time with no live driver.
+- **Property browser:** custom properties, modifiers, shape keys and materials, for example driving a material's emission.
+- **Notes (Ctrl+J):** colored frames with text, saved in the .blend, with jump-to-note.
+- **Skeleton Shape layout:** bones are laid out like the rest pose (human, quadruped…), with left side blue and right side red.
+- **3ds Max-style keys:** [ parent, ] children, double-click selects the tree, L selects dependents, X deletes a selected wire.
 
 ### 中文
 
-Offset 可選 Relative（預設）或 Absolute，Parent、Constraint、Driver 都適用：目標留在原位，只跟著來源的變化量走。Copy Once 一律是絕對值。Auto Units（預設開啟）讓角度用度、整數用 `round()`、開關用 `> 0.5`。Map Range 把 From Min/Max 對到 To Min/Max，可選 Clamp，結果再交給 Expression 的 `var`。每個勾選的目標可以有自己的運算式，留空則用共用 Expression。0.6.1 的紅色提示底已拿掉，Source 仍固定在第一列。
+Schematic View 把 3ds Max 風格的 Schematic View 帶進 Blender，用節點圖呈現整個場景，Parent、Constraint、Driver 都能用視覺化的方式連起來。
 
-完整說明見 [CHANGELOG.md](CHANGELOG.md)。
+- **整個場景的關係圖：** 所有物件都在圖上，Parent、Constraint、Driver、Modifier／材質參照各用不同顏色的線。可以切換 Hierarchy 或 References 篩選，新增物件時圖會自動更新。
+- **每根骨頭都是獨立節點：** 可以讓空物件或網格物件連到個別骨頭（Driver、Copy Location、Damped Track、IK），骨頭和骨頭之間也能互相連動（Parent、Constraint、Driver）。
+- **Link Workbench：** 選一個來源、一個或多個目標，勾選屬性，就能建立 Parent、12 種 Constraint 或 Driver，不用寫程式。「Links Between These」會列出載入項目之間的所有連線，可以直接 Unlink。
+- **Relative／Absolute 偏移：** Relative 讓目標留在原位、只跟著變化量走；Absolute 直接套用來源的值。
+- **Auto Units：** 角度用「度」來寫，角度和距離會自動換算，整數目標會四捨五入，開關目標超過 0.5 就打開。
+- **Map Range＋Clamp**，**每個目標值也能有自己的運算式**：一個來源就能用不同公式同時讓物件移動、旋轉和縮放。
+- **Chain 和 Copy Once：** 來源 → 目標 1 → 目標 2… 依序串連，或者只寫入一次數值，不留下 Driver。
+- **屬性瀏覽：** 自訂屬性、Modifier、Shape Keys、材質都能連，例如驅動材質的 Emission。
+- **Note 註解（Ctrl+J）：** 加上帶文字的彩色框，存在 .blend 裡，可以從清單直接跳過去。
+- **Skeleton Shape 排版：** 骨頭依照 rest pose 的樣子排列（人形、四足……），左邊藍色、右邊紅色。
+- **3ds Max 風格快捷鍵：** [ 選父物件，] 選子物件，雙擊選整棵樹，L 選相依物件，X 刪除選取的連線。
+
+Earlier versions are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## Install
 
