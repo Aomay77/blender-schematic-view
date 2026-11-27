@@ -10,7 +10,7 @@ Watch a short walkthrough of Schematic View.
 
 觀看 Schematic View 的簡短操作示範。
 
-[![Schematic View demo](https://img.youtube.com/vi/gUM2HK-_Bac/maxresdefault.jpg)](https://www.youtube.com/watch?v=gUM2HK-_Bac)
+[![Schematic View demo](docs/demo_thumb.jpg)](https://www.youtube.com/watch?v=gUM2HK-_Bac)
 
 **AI disclosure**　This extension was created by AI and iterated based on user feedback.
 
