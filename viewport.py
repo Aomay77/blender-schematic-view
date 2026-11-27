@@ -1,4 +1,7 @@
-"""Track visibility changes owned by Schematic filters."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Track visibility changes owned by Schematic filters.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 import bpy
 from bpy.props import PointerProperty, StringProperty

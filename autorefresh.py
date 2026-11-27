@@ -1,4 +1,7 @@
-"""Keep open schematic tabs in step with the scene, like 3ds Max's live Schematic View.
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Keep open schematic tabs in step with the scene, like 3ds Max's live Schematic View.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠
 
 Depsgraph updates only stamp a time. A timer waits until the scene has been quiet for a
 moment, then rebuilds a tab only when its relationship fingerprint actually changed, so

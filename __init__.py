@@ -1,11 +1,14 @@
-"""Schematic View for Blender."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Schematic View for Blender.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 import bpy
 
-from . import actions, autorefresh, editor, guide, selection, viewport, wires
+from . import actions, autorefresh, editor, guide, linker, notes, selection, viewport, wires
 
 
-CLASSES = (*editor.CLASSES, *actions.CLASSES)
+CLASSES = (*editor.CLASSES, *actions.CLASSES, *notes.CLASSES)
 draw_handles = []
 
 
@@ -13,6 +16,7 @@ def register():
     guide.register_swatches()
     for cls in CLASSES:
         bpy.utils.register_class(cls)
+    linker.register()
     bpy.types.NODE_MT_context_menu.append(actions.context_menu)
     bpy.app.handlers.load_post.append(selection.clear_state)
     autorefresh.register()
@@ -42,6 +46,7 @@ def unregister():
         bpy.app.timers.unregister(selection.flush)
     selection.clear_state()
     wires.clear_cache()
+    linker.unregister()
     for cls in reversed(CLASSES):
         bpy.utils.unregister_class(cls)
     guide.unregister_swatches()

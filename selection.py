@@ -1,4 +1,7 @@
-"""Reflect graph selection in the scene without writing data during drawing."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Reflect graph selection in the scene without writing data during drawing.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 from collections import defaultdict
 

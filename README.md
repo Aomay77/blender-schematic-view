@@ -1,20 +1,46 @@
-# Blender Schematic View 0.0.10
+# Blender Schematic View 0.7.0
 
-[繁體中文使用說明](使用說明-繁體中文.md) · [English User Guide](User-Guide.en.md)
+[繁體中文使用說明](使用說明-繁體中文.md) · [English User Guide](User-Guide.en.md) · [Changelog](CHANGELOG.md)
 
-[下載 0.0.10 安裝檔 · Download](schematic_view-0.0.10.zip?raw=true)
-
-**AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
+[Download 0.7.0 · 下載](releases/schematic_view-0.7.0.zip?raw=true)
 
 **AI disclosure**　This extension was created by AI and iterated based on user feedback.
 
-在 Blender 內檢視物件和骨架的關係。每個場景保存自己的圖、篩選條件與節點位置。
+**AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
 
-## 安裝
+Schematic View shows object and armature relationships inside Blender. Each scene keeps its own graph, filters, and node positions. Requires **Blender 5.3 or later**.
 
-1. 在 Blender 5.3 開啟 **Edit → Preferences → Get Extensions**。
-2. 從右上角選單選 **Install from Disk**，選擇 `schematic_view-0.0.10.zip`。
-3. 在 3D Viewport 選取物件或骨架，再按 **N → Schematic → Open Schematic View**。浮動視窗會顯示所選項目及直接關係，並建立或切換到其標籤頁。沒有選取時，會開啟空白的 **No Selection** 頁。
+在 Blender 內檢視物件和骨架的關係。每個場景保存自己的圖、篩選條件與節點位置。需要 **Blender 5.3 以上**。
+
+## 0.7.0
+
+Relative offset is the default for Parent, Constraint, and Driver: the target stays put and follows only the change in the source. Absolute writes the value directly. Copy Once is always absolute. Auto Units (on by default) treats angles as degrees, integers with `round()`, and booleans with `> 0.5`. Map Range maps From Min/Max onto To Min/Max, with an optional Clamp, and feeds the result to Expression as `var`. Each checked target can keep its own expression; a blank one uses the shared Expression. The red alert background from 0.6.1 is gone, and Source stays on the first row.
+
+See [CHANGELOG.md](CHANGELOG.md) for the full notes.
+
+### 中文
+
+Offset 可選 Relative（預設）或 Absolute，Parent、Constraint、Driver 都適用：目標留在原位，只跟著來源的變化量走。Copy Once 一律是絕對值。Auto Units（預設開啟）讓角度用度、整數用 `round()`、開關用 `> 0.5`。Map Range 把 From Min/Max 對到 To Min/Max，可選 Clamp，結果再交給 Expression 的 `var`。每個勾選的目標可以有自己的運算式，留空則用共用 Expression。0.6.1 的紅色提示底已拿掉，Source 仍固定在第一列。
+
+完整說明見 [CHANGELOG.md](CHANGELOG.md)。
+
+## Install
+
+Requires **Blender 5.3 or later**.
+
+1. In Blender, open **Edit → Preferences → Get Extensions**.
+2. Open the menu at the top right and choose **Install from Disk**.
+3. Select [`releases/schematic_view-0.7.0.zip`](releases/schematic_view-0.7.0.zip?raw=true).
+4. In the 3D Viewport, select an object or armature, then press **N → Schematic → Open Schematic View**. The floating window shows the selection and its direct relationships, and creates or switches to that tab. With nothing selected, it opens an empty **No Selection** page.
+
+### 安裝
+
+需要 **Blender 5.3 以上**。
+
+1. 在 Blender 開啟 **Edit → Preferences → Get Extensions**。
+2. 從右上角選單選 **Install from Disk**。
+3. 選擇 [`releases/schematic_view-0.7.0.zip`](releases/schematic_view-0.7.0.zip?raw=true)。
+4. 在 3D Viewport 選取物件或骨架，再按 **N → Schematic → Open Schematic View**。浮動視窗會顯示所選項目及直接關係，並建立或切換到其標籤頁。沒有選取時，會開啟空白的 **No Selection** 頁。
 
 ## 標籤頁
 
@@ -62,4 +88,4 @@
 
 例如要用控制骨的 `["ik_fk"]` 驅動物件的 Z 縮放，先標記控制骨，再選物件，將 **Source Property** 填成 `["ik_fk"]`、**Driven Property** 填成 `scale`、**Driven Array Index** 填成 `2`。
 
-從 `0.0.00` 升級後，重新開啟 Schematic View 或按 **Refresh / Apply Filters**，現有圖會套用人形排列和收合節點。安裝套件的 Blender 版本欄位使用 `0.0.10`。Auto-Rig Pro 骨頭分類參考其[骨架文件](https://www.lucky3d.fr/auto-rig-pro/doc/rig_behaviour_doc.html)。
+從 `0.0.00` 升級後，重新開啟 Schematic View 或按 **Refresh / Apply Filters**，現有圖會套用人形排列和收合節點。安裝套件版本為 `0.7.0`，最低 Blender 版本為 5.3。Auto-Rig Pro 骨頭分類參考其[骨架文件](https://www.lucky3d.fr/auto-rig-pro/doc/rig_behaviour_doc.html)。

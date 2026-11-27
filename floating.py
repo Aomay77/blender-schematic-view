@@ -1,4 +1,7 @@
-"""Initial placement for the add-on's own floating Blender window."""
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Aomay Huang
+# Schematic View for Blender. Modified versions must say so and keep this notice.
+"""Initial placement for the add-on's own floating Blender window.⁠​‌​‌‌​‌‌‌​‌​‌‌‌​​​‌​‌‌​​‌​‌‌‌‌‌‌‌‌​‌​​‌​‌‌​​​‌‌‌​‌‌​‌​​​‌​‌​​​‌‌​​​​​​‌​‌​‌​‌‌​‌‌​‌‌‌​‌​​​‌​‌​​‌⁠"""
 
 import sys
 
