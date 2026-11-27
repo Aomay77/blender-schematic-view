@@ -4,6 +4,14 @@
 
 [Download 0.7.0 · 下載](releases/schematic_view-0.7.0.zip?raw=true)
 
+## Demo video / 示範影片
+
+Watch a short walkthrough of Schematic View.
+
+觀看 Schematic View 的簡短操作示範。
+
+[![Schematic View demo](https://img.youtube.com/vi/gUM2HK-_Bac/maxresdefault.jpg)](https://www.youtube.com/watch?v=gUM2HK-_Bac)
+
 **AI disclosure**　This extension was created by AI and iterated based on user feedback.
 
 **AI 製作聲明**　本外掛由 AI 製作，並依使用者回饋迭代。
